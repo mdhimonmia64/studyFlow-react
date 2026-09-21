@@ -1,28 +1,33 @@
 import { LuNotebookPen } from "react-icons/lu";
+import { Link } from "react-router";
 
 const Navbar = () => {
   const navLink = (
     <>
       <li>
-        <a href="">Features</a>
+        <Link to="/features">Features</Link>
       </li>
       <li>
-        <a href="">How it Works</a>
+        <Link to="/how-it-works">How it Works</Link>
       </li>
       <li>
-        <a href="">Pricing</a>
+        <Link to="/">Pricing</Link>
       </li>
       <li>
-        <a href="">FAQ</a>
+        <Link to="/">FAQ</Link>
       </li>
     </>
   );
   return (
-    <div className="bg-[#f0f1eb]">
+    <div className="bg-[#f0f1eb] fixed top-0 left-0 z-50 w-full">
       <div className="navbar shadow-sm container mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden text-black">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost lg:hidden text-black"
+            >
               <svg
                 aria-label="Menu"
                 xmlns="http://www.w3.org/2000/svg"
@@ -47,16 +52,23 @@ const Navbar = () => {
               {navLink}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl text-[#0e7c66]">
+          <Link to="/" className="btn btn-ghost text-xl text-[#0e7c66]">
             <LuNotebookPen size={30} />
             StudyFlow
-          </a>
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 text-black">{navLink}</ul>
         </div>
-        <div className="navbar-end">
-          <a className="btn">Button</a>
+        <div className="navbar-end gap-2">
+          <Link to="/sign-in">
+            <button className="btn font-semibold text-[17px] border border-2 border-[#0e7c66] hover:bg-[#0e7c66] hover:text-white">
+              Login
+            </button>
+          </Link>
+          <Link to="/sign-up">
+            <button className="btn bg-[#0e7c66] text-white">Signup</button>
+          </Link>
         </div>
       </div>
     </div>
