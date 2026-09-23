@@ -43,6 +43,9 @@ const Navbar = () => {
       <li>
         <Link to="/">FAQ</Link>
       </li>
+      <li>
+        <Link to="/private">Private Page</Link>
+      </li>
     </>
   );
   return (

@@ -12,6 +12,8 @@ import MainLayout from "./layout/MainLayout";
 import SignUp from "./pages/signUp/SignUp";
 import { ToastContainer } from "react-toastify";
 import AuthContext from "./context/AuthContext";
+import Private from "./pages/private/Private";
+import PrivateRoute from "./privateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +39,14 @@ const router = createBrowserRouter([
       {
         path: "/sign-up",
         element: <SignUp />,
+      },
+      {
+        path: "/private",
+        element: (
+          <PrivateRoute>
+            <Private />
+          </PrivateRoute>
+        ),
       },
     ],
   },
