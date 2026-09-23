@@ -1,20 +1,49 @@
 import React, { useState } from "react";
 import { LuNotebookPen, LuEye, LuEyeOff } from "react-icons/lu";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import useAuth from "../../hooks/useAuth";
 
 const Signin = () => {
+  const {user,setUser} = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const event = e.target;
-    const email = event.email.value;
-    const password = event.password.value;
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
 
-    console.log({ email, password });
-    console.log("Sign in From submit successfully!");
+    try {
+      const response = await fetch(
+        "/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials:"include",
+          body: JSON.stringify({ email, password }),
+        },
+      );
+      const data = await response.json();
+      if(data.success){
+        toast.success(data.message);
+        setUser(data.data?.user)
+        form.reset();
+        navigate("/")
+      }else{
+        toast.error(data.message || "Something went wrong!")
+      }
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  console.log(user)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-100 flex items-center justify-center px-4 py-20">

@@ -10,6 +10,8 @@ import Signin from "./pages/signIn/Signin";
 import NotFound from "./pages/notFound/NotFound";
 import MainLayout from "./layout/MainLayout";
 import SignUp from "./pages/signUp/SignUp";
+import { ToastContainer } from "react-toastify";
+import AuthContext from "./context/AuthContext";
 
 const router = createBrowserRouter([
   {
@@ -33,9 +35,9 @@ const router = createBrowserRouter([
         element: <Signin />,
       },
       {
-        path:"/sign-up",
-        element:<SignUp />
-      }
+        path: "/sign-up",
+        element: <SignUp />,
+      },
     ],
   },
   {
@@ -46,6 +48,9 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthContext>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </AuthContext>
   </StrictMode>,
 );

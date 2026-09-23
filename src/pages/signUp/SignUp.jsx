@@ -1,19 +1,49 @@
 import React, { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { LuNotebookPen } from "react-icons/lu";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import useAuth from "../../hooks/useAuth";
 
 const SignUp = () => {
+  const { user, setUser } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-      e.preventDefault()
-      const event = e.target;
-      const name = event.name.value;
-      const email = event.email.value;
-      const password = event.password.value;
-      console.log({name,email,password})
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    try {
+      const response = await fetch(
+        "/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, password }),
+        },
+      );
+      const data = await response.json();
+      if (data.success) {
+        toast.success(data.message);
+        setUser(data.data?.user);
+      } else {
+        toast.error(data.message || "Something went wrong!");
+      }
+      form.reset();
+      navigate("/")
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  console.log(user)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-100 flex items-center justify-center px-4 py-20">

@@ -1,7 +1,34 @@
 import { LuNotebookPen } from "react-icons/lu";
 import { Link } from "react-router";
+import useAuth from "../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
+  const { user,setUser, loading } = useAuth();
+
+  const handleLogOut = async() => {
+      try{
+        const response = await fetch("/api/auth/logout",{
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json",
+          },
+          credentials:"include"
+        });
+        const data = await response.json();
+        if(data.success){
+          toast.success(data.message || "Logged out Successfully!");
+          setUser(null)
+        }else{
+          throw new Error(data.message || "Failed to log out.")
+        }
+      }catch(error){
+        console.error(error);
+        toast.error(error.message || "An error occurred. Please try again.")
+      }
+  }
+
+  console.log(user);
   const navLink = (
     <>
       <li>
@@ -61,14 +88,50 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1 text-black">{navLink}</ul>
         </div>
         <div className="navbar-end gap-2">
-          <Link to="/sign-in">
-            <button className="btn font-semibold text-[17px] border border-2 border-[#0e7c66] hover:bg-[#0e7c66] hover:text-white">
-              Login
-            </button>
-          </Link>
-          <Link to="/sign-up">
-            <button className="btn bg-[#0e7c66] text-white">Signup</button>
-          </Link>
+          {loading ? (
+            <span className="loading loading-spinner text-success"></span>
+          ) : user ? (
+            <>
+              <button
+                className="btn w-[70px] w-[70px]"
+                popoverTarget="popover-1"
+                style={{ anchorName: "--anchor-1" }}
+              >
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQADgbezvA1Up9YvdXq2C19EROOi7QhAJB_wg-faJ2Xhg&s=10"
+                  alt="user image"
+                />
+              </button>
+
+              <ul
+                className="dropdown menu w-[300px] rounded-box bg-base-100 shadow-sm"
+                popover="auto"
+                id="popover-1"
+                style={{ positionAnchor: "--anchor-1" }}
+              >
+                <span>{user.name}</span>
+                <li>
+                  <Link className="block text-center" to="/dashboard">Dashboard</Link>
+                </li>
+                <li>
+                    <button className="btn btn-danger border border-red-500 text-red-500 block" onClick={handleLogOut}>
+                      Log Out
+                    </button>
+                </li>
+              </ul>
+            </>
+          ) : (
+            <>
+              <Link to="/sign-in">
+                <button className="btn font-semibold text-[17px] border border-2 border-[#0e7c66] hover:bg-[#0e7c66] hover:text-white">
+                  Login
+                </button>
+              </Link>{" "}
+              <Link to="/sign-up">
+                <button className="btn bg-[#0e7c66] text-white">Signup</button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>
