@@ -18,7 +18,7 @@ const AuthContext = ({ children }) => {
         });
         const data = await response.json();
         if (data.success) {
-          setUser(data.data?.user);
+          setUser(data.data?.user || null);
         }
       } catch (error) {
         console.error("Error fetching user:", error);

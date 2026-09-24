@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { IoAddOutline } from "react-icons/io5";
+import { MdDeleteOutline } from "react-icons/md";
 import { toast } from "react-toastify";
 
 const Subject = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [subject, setSubject] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,31 +33,49 @@ const Subject = () => {
       if (!res.ok) {
         throw new Error(data.message || "Failed to add subject");
       }
-      console.log(data)
+      await fetchSubject();
+      console.log(data);
       e.target.reset();
       setIsModalOpen(false);
     } catch (error) {
-      toast.error("something is want wrong!")
+      toast.error("something is want wrong!");
       console.error(error);
     }
   };
 
   const fetchSubject = async () => {
-    const res = await fetch("/api/subjects",{
-      method:"GET",
+    const res = await fetch("/api/subjects", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    const data = await res.json();
+    setSubject(data.data);
+  };
+
+  const handleDelete = async(id) => {
+    const res = await fetch(`/api/subjects/${id}`,{
+      method:"DELETE",
       headers:{
         "Content-Type":"application/json"
       },
       credentials:"include",
+
     })
 
     const data = await res.json();
-    console.log(data.data);
+    fetchSubject();
+    toast.success(data.message)
   }
 
-  useEffect(() =>{
+  useEffect(() => {
     fetchSubject();
-  },[])
+  }, []);
+
+  console.log(subject);
 
   return (
     <section>
@@ -75,6 +95,39 @@ const Subject = () => {
             Add Subject
           </button>
         </div>
+      </div>
+
+      {/* card */}
+      <div className="grid grid-cols-3 gap-10 p-5">
+        {subject.map((sub) => {
+          return (
+            <div
+              key={sub._id}
+              className="card card-dash bg-base-100 shadow-sm py-6 px-8"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="h-4 w-4 rounded-full" style={{ backgroundColor: sub.color }}></div>
+                  <p>{sub.name}</p>
+                </div>
+                <div>
+                  <MdDeleteOutline className="cursor-pointer" size={22} onClick={() => handleDelete(sub._id)} />
+                </div>
+              </div>
+              <div className="flex items-center justify-between pt-5">
+                <p>Completion</p>
+                <p className="my-2 text-sm">
+                  {Math.round(sub.completedCount)}%
+                </p>
+              </div>
+              <progress
+                className="progress progress-accent"
+                value={sub.completedCount}
+                max="100"
+              ></progress>
+            </div>
+          );
+        })}
       </div>
 
       {isModalOpen && (
