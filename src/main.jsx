@@ -14,6 +14,8 @@ import { ToastContainer } from "react-toastify";
 import AuthContext from "./context/AuthContext";
 import Private from "./pages/private/Private";
 import PrivateRoute from "./privateRoute/PrivateRoute";
+import AdminLayout from "./layout/AdminLayout";
+import Subject from "./pages/subject/Subject";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +49,20 @@ const router = createBrowserRouter([
             <Private />
           </PrivateRoute>
         ),
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <AdminLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "subject",
+        element: <Subject />,
       },
     ],
   },

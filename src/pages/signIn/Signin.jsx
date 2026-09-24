@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { LuNotebookPen, LuEye, LuEyeOff } from "react-icons/lu";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 
@@ -8,6 +8,8 @@ const Signin = () => {
   const {user,setUser} = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +35,7 @@ const Signin = () => {
         toast.success(data.message);
         setUser(data.data?.user)
         form.reset();
-        navigate("/")
+        navigate(from)
       }else{
         toast.error(data.message || "Something went wrong!")
       }

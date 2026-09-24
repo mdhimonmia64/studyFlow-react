@@ -28,7 +28,6 @@ const Navbar = () => {
       }
   }
 
-  console.log(user);
   const navLink = (
     <>
       <li>
