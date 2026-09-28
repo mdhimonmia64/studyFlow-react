@@ -16,6 +16,7 @@ import Private from "./pages/private/Private";
 import PrivateRoute from "./privateRoute/PrivateRoute";
 import AdminLayout from "./layout/AdminLayout";
 import Subject from "./pages/subject/Subject";
+import Goal from "./pages/goal/Goal";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
         path: "subject",
         element: <Subject />,
       },
+      {
+        path:"goal",
+        element:<Goal />,
+      }
     ],
   },
   {

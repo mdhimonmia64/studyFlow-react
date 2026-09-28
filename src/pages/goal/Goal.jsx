@@ -1,48 +1,13 @@
-import { useEffect, useState } from "react";
 import { VscChecklist } from "react-icons/vsc";
 import { IoAddOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const Subject = () => {
+const Goal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [subject, setSubject] = useState([]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const name = e.target.name.value;
-      const color = e.target.color.value;
-
-      const subjectData = {
-        name,
-        color,
-      };
-
-      const res = await fetch("/api/subjects", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(subjectData),
-      });
- 
-      const data = await res.json();
-      toast.success(data.message);
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to add subject");
-      }
-      await fetchSubject();
-      console.log(data);
-      e.target.reset();
-      setIsModalOpen(false);
-    } catch (error) {
-      toast.error("something is want wrong!");
-      console.error(error);
-    }
-  };
+  const [goals, setGoals] = useState([]);
 
   const fetchSubject = async () => {
     const res = await fetch("/api/subjects", {
@@ -57,34 +22,84 @@ const Subject = () => {
     setSubject(data.data);
   };
 
-  const handleDelete = async(id) => {
-    const res = await fetch(`/api/subjects/${id}`,{
-      method:"DELETE",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      credentials:"include",
+  const handleGoal = async (e) => {
+    e.preventDefault();
 
-    })
+    try {
+      const title = e.target.title.value;
+      const target = Number(e.target.target.value);
+      const date = e.target.date.value;
+      const subject = e.target.subject.value;
+
+      const goalData = {
+        title,
+        target,
+        date,
+        subject,
+      };
+      const res = await fetch("/api/goals", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(goalData),
+      });
+
+      const data = await res.json();
+      toast.success(data.message);
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to add subject");
+      }
+      setIsModalOpen(false);
+      await fetchGoal();
+    } catch (err) {
+      toast.error("something is want wrong!");
+      console.error(err);
+    }
+  };
+
+  const fetchGoal = async () => {
+    const res = await fetch("/api/goals", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
 
     const data = await res.json();
-    fetchSubject();
-    toast.success(data.message)
-  }
+    setGoals(data.data);
+  };
+
+  const handleDelete = async (id) => {
+    const res = await fetch(`/api/goals/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    const data = await res.json();
+    fetchGoal();
+    toast.success(data.message);
+  };
+
+  console.log(goals);
 
   useEffect(() => {
     fetchSubject();
+    fetchGoal();
   }, []);
-
-  console.log(subject);
 
   return (
     <section>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Subjects</h1>
+          <h1 className="text-2xl font-bold">Goal</h1>
 
-          <p>Every Subject you're studying, and how much of it is done.</p>
+          <p>The bigger picture your daily tasks are building toward.</p>
         </div>
 
         <div>
@@ -93,40 +108,50 @@ const Subject = () => {
             className="btn bg-[#0e7c66] text-white"
           >
             <IoAddOutline size={22} />
-            Add Subject
+            Add Goal
           </button>
         </div>
       </div>
 
       {/* card */}
       <div className="grid grid-cols-3 gap-10 p-5">
-        {subject.map((sub) => {
+        {goals.map((goal) => {
           return (
             <div
-              key={sub._id}
+              key={goal._id}
               className="card card-dash bg-base-100 shadow-sm py-6 px-8"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="h-4 w-4 rounded-full" style={{ backgroundColor: sub.color }}></div>
-                  <p>{sub.name}</p>
+                  <p>{goal?.title}</p>
                 </div>
                 <div>
-                  <MdDeleteOutline className="cursor-pointer" size={22} onClick={() => handleDelete(sub._id)} />
+                  <MdDeleteOutline
+                    className="cursor-pointer"
+                    size={22}
+                    onClick={() => handleDelete(goal._id)}
+                  />
                 </div>
               </div>
+
+              <div className="flex items-center gap-3 ">
+                <div
+                  className="h-3 w-3 rounded-full "
+                  style={{ backgroundColor: goal?.subject?.color }}
+                ></div>
+                <p>{goal?.subject?.name}</p>
+              </div>
+
               <div className="flex items-center justify-between pt-5">
                 <p className="flex gap-2">
-                  <VscChecklist size={22}/>
-                  {sub.taskCount} linked tasks
-                  </p>
-                <p className="my-2 text-sm">
-                  {Math.round(sub.completedCount)}%
+                  <VscChecklist size={22} />
+                  {goal?.taskCount} linked tasks
                 </p>
+                <p className="my-2 text-sm">{Math.round(goal?.completed)}%</p>
               </div>
               <progress
                 className="progress progress-accent"
-                value={sub.completedCount}
+                value={goal?.completed}
                 max="100"
               ></progress>
             </div>
@@ -148,16 +173,16 @@ const Subject = () => {
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleGoal} className="space-y-4">
               <div>
                 <label className="mb-1 block font-medium text-gray-700">
-                  Subject Name
+                  Title
                 </label>
 
                 <input
                   type="text"
-                  name="name"
-                  placeholder="e.g. JavaScript"
+                  name="title"
+                  placeholder="title"
                   className="input input-bordered w-full"
                   required
                 />
@@ -165,16 +190,45 @@ const Subject = () => {
 
               <div>
                 <label className="mb-1 block font-medium text-gray-700">
-                  Subject Color
+                  Target
                 </label>
 
                 <input
-                  type="color"
-                  name="color"
-                  defaultValue="#0e7c66"
+                  type="number"
+                  name="target"
+                  placeholder="target"
                   className="h-12 w-full cursor-pointer rounded-lg border p-1"
                   required
                 />
+              </div>
+              <div>
+                <label className="mb-1 block font-medium text-gray-700">
+                  Date
+                </label>
+
+                <input
+                  type="date"
+                  name="date"
+                  className="h-12 w-full cursor-pointer rounded-lg border p-1"
+                  required
+                />
+              </div>
+              <div>
+                <label className="mb-1 block font-medium text-gray-700">
+                  Subject
+                </label>
+                <select
+                  name="subject"
+                  defaultValue="Pick a color"
+                  className="select "
+                >
+                  <option disabled={true}>Choose a Subject</option>
+                  {subject.map((sub) => (
+                    <option value={sub?._id} key={sub._id}>
+                      {sub.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="flex justify-end gap-3 pt-3">
@@ -187,7 +241,7 @@ const Subject = () => {
                 </button>
 
                 <button type="submit" className="btn bg-[#0e7c66] text-white">
-                  Add Subject
+                  Add Goal
                 </button>
               </div>
             </form>
@@ -198,4 +252,4 @@ const Subject = () => {
   );
 };
 
-export default Subject;
+export default Goal;

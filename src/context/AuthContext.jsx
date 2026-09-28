@@ -16,6 +16,12 @@ const AuthContext = ({ children }) => {
           },
           credentials: "include",
         });
+
+         if (!response.ok) {
+          setUser(null);
+          return;
+        }
+
         const data = await response.json();
         if (data.success) {
           setUser(data.data?.user || null);

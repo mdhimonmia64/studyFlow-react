@@ -4,12 +4,12 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(),tailwindcss()],
-  server:{
-    proxy:{
-      '/api':{
-        target:'https://studyflow-backend-rho.vercel.app',
-        changeOrigin:true,
+  plugins: [react(), tailwindcss()],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://studyflow-backend-rho.vercel.app',
+        changeOrigin: true,
         secure: true,
       }
     }

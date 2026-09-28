@@ -1,3 +1,4 @@
+import { GoGoal } from "react-icons/go";
 import {
   IoBookOutline,
   IoHomeOutline,
@@ -58,6 +59,16 @@ const AdminLayout = () => {
               >
                 <IoHomeOutline size={20} />
                 <span className="is-drawer-close:hidden">Homepage</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={"/dashboard/goal"}
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Goal"
+              >
+                <GoGoal size={20}/>
+                <span className="is-drawer-close:hidden">Goal</span>
               </Link>
             </li>
             <li>
