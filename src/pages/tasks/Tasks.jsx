@@ -9,6 +9,9 @@ const Tasks = () => {
   const [subject, setSubject] = useState([]);
   const [goals, setGoals] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [subjectFilter, setSubjectFilter] = useState("all");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,8 +32,6 @@ const Tasks = () => {
         priority,
         estimated,
       };
-
-      console.log(tasksData);
 
       const res = await fetch("/api/tasks", {
         method: "POST",
@@ -92,13 +93,12 @@ const Tasks = () => {
       });
       const data = await res.json();
       setTasks(data.data);
-      console.log(data.data);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleDelete = async (id) => {
+  const deleteTask = async (id) => {
     const res = await fetch(`/api/tasks/${id}`, {
       method: "DELETE",
       headers: {
@@ -139,6 +139,23 @@ const Tasks = () => {
     }
   };
 
+  const filteredTasks = tasks.filter((task) => {
+    const matchesSearch = task?.title
+      ?.toLowerCase()
+      .includes(search.toLowerCase());
+
+    const matchesStatus =
+      statusFilter === "all" ||
+      (statusFilter === "done" && task.completed === true) ||
+      (statusFilter === "left" && task.completed === false);
+
+    const matchesSubject =
+      subjectFilter === "all" ||
+      String(task?.subject?._id) === String(subjectFilter);
+
+    return matchesSearch && matchesStatus && matchesSubject;
+  });
+
   useEffect(() => {
     fetchSubject();
     fetchGoal();
@@ -153,7 +170,6 @@ const Tasks = () => {
 
           <p>Every Tasks you're added, across every subject.</p>
         </div>
-
         <div>
           <button
             onClick={() => setIsModalOpen(true)}
@@ -164,8 +180,62 @@ const Tasks = () => {
           </button>
         </div>
       </div>
+
+      <div className="flex gap-4 mt-4">
+        <label className="input validator w-full">
+          <input
+            type="search"
+            required
+            placeholder="Search tasks..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </label>
+        <button
+          onClick={() => setStatusFilter("all")}
+          className={`btn ${
+            statusFilter === "all" ? "btn-accent" : "btn-outline btn-accent"
+          }`}
+        >
+          All
+        </button>
+
+        <button
+          onClick={() => setStatusFilter("done")}
+          className={`btn ${
+            statusFilter === "done" ? "btn-accent" : "btn-outline btn-accent"
+          }`}
+        >
+          Done
+        </button>
+
+        <button
+          onClick={() => setStatusFilter("left")}
+          className={`btn ${
+            statusFilter === "left" ? "btn-accent" : "btn-outline btn-accent"
+          }`}
+        >
+          Left
+        </button>
+        <select
+          name="subjectFilter"
+          id="subjectFilter"
+          value={subjectFilter}
+          onChange={(e) => setSubjectFilter(e.target.value)}
+          className="select"
+        >
+          <option value="all">All Subjects</option>
+
+          {subject.map((sub) => (
+            <option value={sub._id} key={sub._id}>
+              {sub.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className=" p-5">
-        {tasks.map((task) => {
+        {filteredTasks.map((task) => {
           return (
             <div
               key={task?._id}
@@ -181,7 +251,9 @@ const Tasks = () => {
                   />
 
                   <div>
-                    <p className={`text-xl font-semibold text-gray-800 ${task?.completed ? "line-through text-gray-200" : ""} `}>
+                    <p
+                      className={`text-xl font-semibold text-gray-800 ${task?.completed ? "line-through text-gray-200" : ""} `}
+                    >
                       {task?.title}
                     </p>
 
@@ -217,7 +289,7 @@ const Tasks = () => {
                 <button
                   type="button"
                   className="rounded-full p-2 text-gray-500 transition hover:bg-red-50 hover:text-red-500"
-                  onClick={() => handleDelete(task?._id)}
+                  onClick={() => deleteTask(task?._id)}
                 >
                   <MdDeleteOutline size={22} />
                 </button>
