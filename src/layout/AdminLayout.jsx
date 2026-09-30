@@ -1,3 +1,4 @@
+import { FaTasks } from "react-icons/fa";
 import { GoGoal } from "react-icons/go";
 import {
   IoBookOutline,
@@ -59,6 +60,16 @@ const AdminLayout = () => {
               >
                 <IoHomeOutline size={20} />
                 <span className="is-drawer-close:hidden">Homepage</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={"/dashboard/tasks"}
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Tasks"
+              >
+                <FaTasks size={20} />
+                <span className="is-drawer-close:hidden">Tasks</span>
               </Link>
             </li>
             <li>

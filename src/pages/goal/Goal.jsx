@@ -86,8 +86,6 @@ const Goal = () => {
     toast.success(data.message);
   };
 
-  console.log(goals);
-
   useEffect(() => {
     fetchSubject();
     fetchGoal();
@@ -175,11 +173,12 @@ const Goal = () => {
 
             <form onSubmit={handleGoal} className="space-y-4">
               <div>
-                <label className="mb-1 block font-medium text-gray-700">
+                <label htmlFor="title" className="mb-1 block font-medium text-gray-700">
                   Title
                 </label>
 
                 <input
+                  id="title"
                   type="text"
                   name="title"
                   placeholder="title"
@@ -189,11 +188,12 @@ const Goal = () => {
               </div>
 
               <div>
-                <label className="mb-1 block font-medium text-gray-700">
+                <label htmlFor="target" className="mb-1 block font-medium text-gray-700">
                   Target
                 </label>
 
                 <input
+                id="target"
                   type="number"
                   name="target"
                   placeholder="target"
@@ -202,11 +202,12 @@ const Goal = () => {
                 />
               </div>
               <div>
-                <label className="mb-1 block font-medium text-gray-700">
+                <label htmlFor="date" className="mb-1 block font-medium text-gray-700">
                   Date
                 </label>
 
                 <input
+                id="date"
                   type="date"
                   name="date"
                   className="h-12 w-full cursor-pointer rounded-lg border p-1"
@@ -214,11 +215,12 @@ const Goal = () => {
                 />
               </div>
               <div>
-                <label className="mb-1 block font-medium text-gray-700">
+                <label htmlFor="subject" className="mb-1 block font-medium text-gray-700">
                   Subject
                 </label>
                 <select
                   name="subject"
+                  id="subject"
                   defaultValue="Pick a color"
                   className="select "
                 >

@@ -35,7 +35,6 @@ const Subject = () => {
         throw new Error(data.message || "Failed to add subject");
       }
       await fetchSubject();
-      console.log(data);
       e.target.reset();
       setIsModalOpen(false);
     } catch (error) {
@@ -76,7 +75,6 @@ const Subject = () => {
     fetchSubject();
   }, []);
 
-  console.log(subject);
 
   return (
     <section>
@@ -150,11 +148,12 @@ const Subject = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="mb-1 block font-medium text-gray-700">
+                <label htmlFor="subject" className="mb-1 block font-medium text-gray-700">
                   Subject Name
                 </label>
 
                 <input
+                id="subject"
                   type="text"
                   name="name"
                   placeholder="e.g. JavaScript"
@@ -164,11 +163,12 @@ const Subject = () => {
               </div>
 
               <div>
-                <label className="mb-1 block font-medium text-gray-700">
+                <label htmlFor="color" className="mb-1 block font-medium text-gray-700">
                   Subject Color
                 </label>
 
                 <input
+                id="color"
                   type="color"
                   name="color"
                   defaultValue="#0e7c66"
