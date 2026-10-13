@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import{ createContext, useEffect, useState } from "react";
 
 export const authContext = createContext();
 
@@ -6,12 +6,10 @@ const AuthContext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading,setLoading] = useState(true);
 
-  const API_URL = import.meta.env.VITE_API_URL || "";
-
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/auth/me`, {
+        const response = await fetch("/api/auth/me", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -27,6 +25,8 @@ const AuthContext = ({ children }) => {
         const data = await response.json();
         if (data.success) {
           setUser(data.data?.user || null);
+        }else {
+          throw new Error(data.message || "Failed to fetch user.");
         }
       } catch (error) {
         console.error("Error fetching user:", error);
@@ -37,6 +37,7 @@ const AuthContext = ({ children }) => {
     };
     fetchUser();
   }, []);
+
 
   const authContextData = {
     user,

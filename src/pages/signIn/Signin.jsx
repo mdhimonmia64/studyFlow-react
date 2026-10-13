@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import{ useState } from "react";
 import { LuNotebookPen, LuEye, LuEyeOff } from "react-icons/lu";
 import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -30,6 +30,7 @@ const Signin = () => {
           body: JSON.stringify({ email, password }),
         },
       );
+
       const data = await response.json();
       if(data.success){
         toast.success(data.message);
@@ -39,9 +40,9 @@ const Signin = () => {
       }else{
         toast.error(data.message || "Something went wrong!")
       }
-      console.log(data);
     } catch (error) {
       console.error(error);
+       toast.error(error.message || "An error occurred. Please try again.");
     }
   };
 

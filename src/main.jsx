@@ -18,6 +18,8 @@ import AdminLayout from "./layout/AdminLayout";
 import Subject from "./pages/subject/Subject";
 import Goal from "./pages/goal/Goal";
 import Tasks from "./pages/tasks/Tasks";
+import Pricing from "./pages/pricing/Pricing";
+import FAQ from "./pages/faq/FAQ";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
       {
         path: "/how-it-works",
         element: <HowItWorks />,
+      },
+      {
+        path:"/pricing",
+        element:<Pricing />
+      },
+      {
+        path:"/faq",
+        element:<FAQ />
       },
       {
         path: "/sign-in",

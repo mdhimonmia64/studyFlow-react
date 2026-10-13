@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { LuNotebookPen } from "react-icons/lu";
 import { Link, useNavigate } from "react-router";
@@ -39,6 +39,7 @@ const SignUp = () => {
       navigate("/")
     } catch (error) {
       console.error(error);
+      toast.error(error.message || "An error occurred. Please try again.");
     }
   };
 
