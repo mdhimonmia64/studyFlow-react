@@ -344,7 +344,7 @@ const Tasks = () => {
                   defaultValue="Pick a color"
                   className="select "
                 >
-                  <option disabled={true}>Choose a Subject</option>
+                  <option>Choose a Subject</option>
                   {subject.map((sub) => (
                     <option value={sub?._id} key={sub._id}>
                       {sub.name}
@@ -360,7 +360,7 @@ const Tasks = () => {
                   Goal
                 </label>
                 <select id="goal" name="goal" className="select ">
-                  <option disabled={true}>Choose a Goal</option>
+                  <option>Choose a Goal</option>
                   {goals.map((goal) => (
                     <option value={goal?._id} key={goal._id}>
                       {goal?.title}

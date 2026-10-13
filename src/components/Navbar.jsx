@@ -113,7 +113,7 @@ const Navbar = () => {
               >
                 <span>{user.name}</span>
                 <li>
-                  <Link className="block text-center" to="/dashboard">Dashboard</Link>
+                  <Link className="block text-center" to="/dashboard/tasks">Dashboard</Link>
                 </li>
                 <li>
                     <button className="btn btn-danger border border-red-500 text-red-500 block" onClick={handleLogOut}>

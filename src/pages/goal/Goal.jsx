@@ -111,7 +111,6 @@ const Goal = () => {
         </div>
       </div>
 
-      {/* card */}
       <div className="grid grid-cols-3 gap-10 p-5">
         {goals.map((goal) => {
           return (
@@ -224,7 +223,7 @@ const Goal = () => {
                   defaultValue="Pick a color"
                   className="select "
                 >
-                  <option disabled={true}>Choose a Subject</option>
+                  <option>Choose a Subject</option>
                   {subject.map((sub) => (
                     <option value={sub?._id} key={sub._id}>
                       {sub.name}

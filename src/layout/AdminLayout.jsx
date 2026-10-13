@@ -5,9 +5,14 @@ import {
   IoHomeOutline,
   IoSettingsOutline,
 } from "react-icons/io5";
-import { Link, Outlet } from "react-router";
+import { NavLink, Outlet, useLocation } from "react-router";
 
 const AdminLayout = () => {
+
+  const location = useLocation();
+  const locationArr = location.pathname.split("/");
+  const path = locationArr[locationArr.length-1]
+
   return (
     <div className="drawer lg:drawer-open">
       <input
@@ -37,7 +42,7 @@ const AdminLayout = () => {
               <path d="M14 10l2 2l-2 2"></path>
             </svg>
           </label>
-          <div className="px-4">Navbar Title</div>
+          <div className="px-4">{path}</div>
         </nav>
         <div className="p-4">
           <Outlet />
@@ -51,56 +56,62 @@ const AdminLayout = () => {
           className="drawer-overlay"
         ></label>
         <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-          <ul className="menu w-full grow">
+          <ul className="menu w-full grow">           
             <li>
-              <Link
-                to={"/"}
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Homepage"
+              <NavLink
+                to="/"
+                end
+                className={({ isActive }) =>
+                  `is-drawer-close:tooltip is-drawer-close:tooltip-right ${
+                    isActive ? "bg-black text-primary-content" : ""
+                  }`
+                }
+                data-tip="Home"
               >
                 <IoHomeOutline size={20} />
-                <span className="is-drawer-close:hidden">Homepage</span>
-              </Link>
+                <span className="is-drawer-close:hidden">Home</span>
+              </NavLink>
             </li>
+
             <li>
-              <Link
+              <NavLink
                 to={"/dashboard/tasks"}
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Tasks"
               >
                 <FaTasks size={20} />
                 <span className="is-drawer-close:hidden">Tasks</span>
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
+              <NavLink
                 to={"/dashboard/goal"}
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Goal"
               >
-                <GoGoal size={20}/>
+                <GoGoal size={20} />
                 <span className="is-drawer-close:hidden">Goal</span>
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
+              <NavLink
                 to={"/dashboard/subject"}
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Subject"
               >
                 <IoBookOutline size={20} />
                 <span className="is-drawer-close:hidden">Subject</span>
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
+              <NavLink
                 to={"/"}
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Settings"
               >
                 <IoSettingsOutline size={22} />
                 <span className="is-drawer-close:hidden">Settings</span>
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </div>
