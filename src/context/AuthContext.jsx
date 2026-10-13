@@ -6,10 +6,12 @@ const AuthContext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading,setLoading] = useState(true);
 
+  const API_URL = import.meta.env.VITE_API_URL || "";
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch("/api/auth/me", {
+        const response = await fetch(`${API_URL}/api/auth/me`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
