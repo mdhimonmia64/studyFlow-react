@@ -37,7 +37,6 @@ const SignUp = () => {
       }
       form.reset();
       navigate("/")
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
