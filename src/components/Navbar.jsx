@@ -81,7 +81,7 @@ const Navbar = () => {
               {navLink}
             </ul>
           </div>
-          <Link to="/" className="btn btn-ghost text-xl text-[#0e7c66]">
+          <Link to="/" className="btn btn-ghost text-[17px] md:text-xl text-[#0e7c66]">
             <LuNotebookPen size={30} />
             StudyFlow
           </Link>
@@ -89,7 +89,7 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 text-black">{navLink}</ul>
         </div>
-        <div className="navbar-end gap-2">
+        <div className="navbar-end md:gap-2">
           {loading ? (
             <span className="loading loading-spinner text-success"></span>
           ) : user ? (
@@ -125,7 +125,7 @@ const Navbar = () => {
           ) : (
             <>
               <Link to="/sign-in">
-                <button className="btn font-semibold text-[17px] border border-2 border-[#0e7c66] hover:bg-[#0e7c66] hover:text-white">
+                <button className="btn font-semibold text-[13px] md:text-[17px] border border-2 border-[#0e7c66] hover:bg-[#0e7c66] hover:text-white">
                   Login
                 </button>
               </Link>{" "}
