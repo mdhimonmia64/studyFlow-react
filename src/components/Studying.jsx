@@ -1,4 +1,3 @@
-import React from "react";
 import { FiActivity } from "react-icons/fi";
 import { GoGoal } from "react-icons/go";
 import { MdAutoAwesomeMotion } from "react-icons/md";
@@ -15,7 +14,7 @@ const Studying = () => {
         }
       />
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <FeaturedCard
           icon={<GoGoal className="mx-auto text-[#0e7c66] text-3xl" />}
           title="Goals stay vague"

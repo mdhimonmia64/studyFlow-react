@@ -75,22 +75,22 @@ const Features = () => {
       <section className="relative isolate overflow-hidden">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10" />
 
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-20 sm:px-8 md:py-28 lg:grid-cols-2 lg:gap-16">
+        <div className="container mx-auto grid items-center gap-12 px-5 py-20 sm:px-8 md:py-28 lg:grid-cols-2 lg:gap-16">
           <div>
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
               <Zap size={16} />
               Everything you need to study smarter
             </div>
 
-            <h1 className="max-w-2xl text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
               Your studies.
-              <span className="block text-primary">
+              <span className=" text-primary">
                 Your goals.
               </span>
               Your success.
             </h1>
 
-            <p className="mt-6 max-w-xl text-base leading-8 text-base-content/70 sm:text-lg">
+            <p className="mt-6 text-base leading-8 text-base-content/70 sm:text-lg">
               Meet StudyFlow, your study organization companion.
               Plan your day, organize subjects, manage tasks, and
               stay focused on what matters most.

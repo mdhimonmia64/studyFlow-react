@@ -48,7 +48,7 @@ const Review = () => {
   return (
     <section className=" py-12 container mx-auto">
         <SectionHeader title={"Students are getting more done"} />
-      <div className="grid grid-cols-3 gap-4 ">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
         {reviews.map((review) => (
           <div key={review.id} className=" bg-white p-6 mb-4 rounded-xl shadow-xl space-y-2 rounded-tl-4xl rounded-br-4xl">
             <h3 className="text-lg font-semibold">{review.name}</h3>

@@ -43,7 +43,7 @@ const Pricing = () => {
         title={"Simple Pricing"}
         subTitle={"Start free. Upgrade if you outgrow it."}
       />
-      <div className="grid grid-cols-2 gap-4 max-w-[700px] mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[700px] mx-auto">
         {plans.map((plan) => {
           return <PricingCard key={plan.id} plan={plan} />;
         })}

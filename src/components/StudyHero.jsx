@@ -4,7 +4,7 @@ const StudyHero = () => {
       <img
         src="/studyflow.jpg"
         alt="StudyFlow Study Planner"
-        className="w-full h-[500px] mx-auto object-contain object-cover"
+        className="w-full md:h-[500px] mx-auto object-contain object-cover"
       />
     </div>
   );

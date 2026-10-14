@@ -1,8 +1,7 @@
-import React from "react";
 import SectionHeader from "./shared/SectionHeader";
 import HowItWorksCard from "./shared/HowItWorksCard";
 
-const HowItWorks = () => {
+const HowItWorks = () => {   
   const steps = [
     {
       title: "Set a goal",
@@ -39,7 +38,7 @@ const HowItWorks = () => {
   return (
     <div className="container mx-auto py-[75px] space-y-10">
       <SectionHeader title={"How it Works"} />
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {steps.map((step, index) => {
           return (
             <HowItWorksCard key={index} index={index} step={step}/>

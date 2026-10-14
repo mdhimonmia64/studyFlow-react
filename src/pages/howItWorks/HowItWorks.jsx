@@ -1,8 +1,5 @@
-
-import React from "react";
 import { Link } from "react-router";
 import {
-  ArrowDown,
   ArrowRight,
   CheckCircle2,
   ClipboardList,
@@ -61,7 +58,6 @@ const steps = [
 const HowItWorks = () => {
   return (
     <main className="min-h-screen overflow-hidden bg-base-100 text-base-content">
-      {/* Hero */}
       <section className="relative isolate">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/10 via-base-100 to-base-100" />
         <div className="pointer-events-none absolute -right-24 top-10 -z-10 h-72 w-72 rounded-full bg-secondary/10 blur-3xl" />
@@ -119,8 +115,6 @@ const HowItWorks = () => {
           </div>
         </div>
       </section>
-
-      {/* Steps */}
       <section className="px-5 py-16 sm:px-8 md:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto mb-14 max-w-2xl text-center">
@@ -191,8 +185,6 @@ const HowItWorks = () => {
           </div>
         </div>
       </section>
-
-      {/* Dashboard Preview */}
       <section className="px-5 py-16 sm:px-8 md:py-20">
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <div>
@@ -237,8 +229,6 @@ const HowItWorks = () => {
               <ArrowRight size={18} />
             </Link>
           </div>
-
-          {/* Decorative UI preview */}
           <div className="relative">
             <div className="absolute -inset-5 -z-10 rounded-[2rem] bg-primary/10 blur-2xl" />
 
@@ -326,8 +316,6 @@ const HowItWorks = () => {
           </div>
         </div>
       </section>
-
-      {/* CTA */}
       <section className="px-5 pb-20 pt-10 sm:px-8 md:pb-28">
         <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-primary px-6 py-14 text-center text-primary-content sm:px-12 sm:py-20">
           <div className="mx-auto max-w-2xl">

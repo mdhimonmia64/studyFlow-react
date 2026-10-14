@@ -155,8 +155,6 @@ const FAQ = () => {
             Have a question about StudyFlow? Find helpful answers
             about getting started, managing your studies, and your account.
           </p>
-
-          {/* Search */}
           <div className="mx-auto mt-9 max-w-2xl">
             <label
               htmlFor="faq-search"
@@ -199,17 +197,16 @@ const FAQ = () => {
         </div>
       </section>
 
-      {/* FAQ Content */}
+
       <section className="px-5 pb-20 sm:px-8 md:pb-28">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[270px_minmax(0,1fr)] lg:gap-12">
-          {/* Categories */}
           <aside>
             <div className="rounded-3xl border border-base-300 bg-base-100 p-4 sm:p-5 lg:sticky lg:top-24">
               <h2 className="px-3 pb-4 text-sm font-bold uppercase tracking-wider text-base-content/50">
                 Browse by category
               </h2>
 
-              <div className="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible">
+              <div className="md:flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible">
                 {faqCategories.map((category) => {
                   const Icon = category.icon;
                   const isActive = activeCategory === category.name;

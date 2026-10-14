@@ -148,8 +148,8 @@ const Private = () => {
   ];
 
   return (
-    <div className="space-y-7">
-      <section className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
+    <div className="space-y-7 mt-10 mx-5">
+      <section className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center ">
         <div>
           <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
             <Sparkles size={14} />
@@ -157,11 +157,11 @@ const Private = () => {
           </div>
 
           <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
-            Welcome back! 👋
+            Welcome back
           </h1>
 
           <p className="mt-2 text-sm leading-6 text-base-content/60">
-            প্রতিদিন একটু একটু করে এগিয়ে যাও। আজকের লক্ষ্য পূরণ করো।
+            Move forward a little every day. Achieve today's goal.
           </p>
         </div>
 
