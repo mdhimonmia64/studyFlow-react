@@ -3,7 +3,6 @@ import { GoGoal } from "react-icons/go";
 import {
   IoBookOutline,
   IoHomeOutline,
-  IoSettingsOutline,
 } from "react-icons/io5";
 import { NavLink, Outlet, useLocation } from "react-router";
 
@@ -101,16 +100,6 @@ const AdminLayout = () => {
               >
                 <IoBookOutline size={20} />
                 <span className="is-drawer-close:hidden">Subject</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to={"/"}
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Settings"
-              >
-                <IoSettingsOutline size={22} />
-                <span className="is-drawer-close:hidden">Settings</span>
               </NavLink>
             </li>
           </ul>

@@ -21,6 +21,10 @@ import Tasks from "./pages/tasks/Tasks";
 import Pricing from "./pages/pricing/Pricing";
 import FAQ from "./pages/faq/FAQ";
 
+import AOS from "aos";
+
+import "aos/dist/aos.css";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -91,6 +95,13 @@ const router = createBrowserRouter([
     element: <NotFound />,
   },
 ]);
+
+AOS.init({
+  duration: 1000,
+  once: true,
+  offset: 100,
+  easing: "ease-in-out",
+});
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

@@ -28,7 +28,7 @@ const Subject = () => {
         credentials: "include",
         body: JSON.stringify(subjectData),
       });
- 
+
       const data = await res.json();
       toast.success(data.message);
       if (!res.ok) {
@@ -56,25 +56,23 @@ const Subject = () => {
     setSubject(data.data);
   };
 
-  const handleDelete = async(id) => {
-    const res = await fetch(`/api/subjects/${id}`,{
-      method:"DELETE",
-      headers:{
-        "Content-Type":"application/json"
+  const handleDelete = async (id) => {
+    const res = await fetch(`/api/subjects/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
       },
-      credentials:"include",
-
-    })
+      credentials: "include",
+    });
 
     const data = await res.json();
     fetchSubject();
-    toast.success(data.message)
-  }
+    toast.success(data.message);
+  };
 
   useEffect(() => {
     fetchSubject();
   }, []);
-
 
   return (
     <section>
@@ -95,45 +93,110 @@ const Subject = () => {
           </button>
         </div>
       </div>
-
-      {/* card */}
       <div className="grid grid-cols-3 gap-10 p-5">
         {subject.map((sub) => {
           return (
             <div
               key={sub._id}
-              className="card card-dash bg-base-100 shadow-sm py-6 px-8"
+              data-aos="fade-up"
+              data-aos-duration="500"
+              className="group relative overflow-hidden rounded-2xl border border-base-300 bg-base-100 p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="h-4 w-4 rounded-full" style={{ backgroundColor: sub.color }}></div>
-                  <p>{sub.name}</p>
+              <div
+                className="absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-10 blur-2xl transition-all duration-500 group-hover:scale-150"
+                style={{ backgroundColor: sub.color || "#10b981" }}
+              />
+              <div className="relative flex items-center justify-between gap-3">
+                <div className="flex min-w-0 items-center gap-3">
+                  <div
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl shadow-sm transition-transform duration-300 group-hover:rotate-3 group-hover:scale-105"
+                    style={{
+                      backgroundColor: `${sub.color || "#10b981"}18`,
+                      color: sub.color || "#10b981",
+                    }}
+                  >
+                    <VscChecklist size={24} />
+                  </div>
+
+                  <div className="min-w-0">
+                    <h3 className="truncate font-bold text-base-content">
+                      {sub.name}
+                    </h3>
+                    <p className="mt-1 text-xs text-base-content/50">
+                      Subject overview
+                    </p>
+                  </div>
                 </div>
+
+                <button
+                  type="button"
+                  aria-label={`Delete ${sub.name}`}
+                  onClick={() => handleDelete(sub._id)}
+                  className="rounded-xl p-2 text-base-content/40 transition-all duration-200 hover:bg-red-50 hover:text-red-500 active:scale-90"
+                >
+                  <MdDeleteOutline size={21} />
+                </button>
+              </div>
+
+              <div className="my-5 h-px bg-base-300/70" />
+
+              <div className="flex items-end justify-between gap-3">
                 <div>
-                  <MdDeleteOutline className="cursor-pointer" size={22} onClick={() => handleDelete(sub._id)} />
+                  <p className="text-xs font-medium text-base-content/50">
+                    Linked tasks
+                  </p>
+                  <p className="mt-1 flex items-center gap-2 text-lg font-bold text-base-content">
+                    <VscChecklist className="text-base-content/50" size={19} />
+                    {sub.taskCount ?? 0}
+                    <span className="text-sm font-normal text-base-content/50">
+                      tasks
+                    </span>
+                  </p>
+                </div>
+
+                <span
+                  className="rounded-xl px-3 py-2 text-sm font-bold"
+                  style={{
+                    backgroundColor: `${sub.color || "#10b981"}18`,
+                    color: sub.color || "#10b981",
+                  }}
+                >
+                  {Math.round(
+                    Math.min(100, Math.max(0, Number(sub.completedCount) || 0)),
+                  )}
+                  %
+                </span>
+              </div>
+
+              <div className="mt-4">
+                <div className="h-2.5 overflow-hidden rounded-full bg-base-200">
+                  <div
+                    className="h-full rounded-full transition-all duration-1000 ease-out"
+                    style={{
+                      width: `${Math.min(100, Math.max(0, Number(sub.completedCount) || 0))}%`,
+                      backgroundColor: sub.color || "#10b981",
+                    }}
+                  />
+                </div>
+
+                <div className="mt-2 flex items-center justify-between text-xs">
+                  <span className="text-base-content/50">
+                    Completion progress
+                  </span>
+                  <span className="font-medium text-base-content/70">
+                    {Number(sub.completedCount) >= 100
+                      ? "Completed"
+                      : "Keep going!"}
+                  </span>
                 </div>
               </div>
-              <div className="flex items-center justify-between pt-5">
-                <p className="flex gap-2">
-                  <VscChecklist size={22}/>
-                  {sub.taskCount} linked tasks
-                  </p>
-                <p className="my-2 text-sm">
-                  {Math.round(sub.completedCount)}%
-                </p>
-              </div>
-              <progress
-                className="progress progress-accent"
-                value={sub.completedCount}
-                max="100"
-              ></progress>
             </div>
           );
         })}
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+        <div className="aura aura-gold fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
           <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
             <div className="mb-5 flex items-center justify-between">
               <h2 className="text-xl font-bold text-gray-800">Add Subject</h2>
@@ -148,12 +211,15 @@ const Subject = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="subject" className="mb-1 block font-medium text-gray-700">
+                <label
+                  htmlFor="subject"
+                  className="mb-1 block font-medium text-gray-700"
+                >
                   Subject Name
                 </label>
 
                 <input
-                id="subject"
+                  id="subject"
                   type="text"
                   name="name"
                   placeholder="e.g. JavaScript"
@@ -163,12 +229,15 @@ const Subject = () => {
               </div>
 
               <div>
-                <label htmlFor="color" className="mb-1 block font-medium text-gray-700">
+                <label
+                  htmlFor="color"
+                  className="mb-1 block font-medium text-gray-700"
+                >
                   Subject Color
                 </label>
 
                 <input
-                id="color"
+                  id="color"
                   type="color"
                   name="color"
                   defaultValue="#0e7c66"

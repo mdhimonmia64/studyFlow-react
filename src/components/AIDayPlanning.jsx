@@ -3,7 +3,7 @@ import { TbTopologyStar3 } from "react-icons/tb";
 
 const AIDayPlanning = () => {
   return (
-    <section className="container mx-auto bg-[#14231f] grid grid-cols-2 gap-4 py-[55px] px-4 text-white items-center rounded-xl">
+    <section className=" container mx-auto bg-[#14231f] grid grid-cols-2 gap-4 py-[55px] px-4 text-white items-center rounded-xl">
       <div className="space-y-4">
         <h3 className="text-yellow-500 text-lg font-semibold flex items-center gap-2">
           <TbTopologyStar3 />

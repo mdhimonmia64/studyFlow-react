@@ -234,61 +234,98 @@ const Tasks = () => {
         </select>
       </div>
 
-      <div className=" p-5">
+      <div className="p-5">
         {filteredTasks.map((task) => {
           return (
             <div
               key={task?._id}
-              className="card card-dash m-5 bg-base-100 px-6 py-5 shadow-sm"
+              data-aos="fade-up"
+              className={`group m-4 overflow-hidden rounded-2xl border bg-base-100 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+                task?.completed
+                  ? "border-emerald-200"
+                  : "border-base-300 hover:border-emerald-300"
+              }`}
             >
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-4">
+              <div
+                className={`h-1 w-full ${
+                  task?.completed
+                    ? "bg-emerald-500"
+                    : "bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400"
+                }`}
+              />
+
+              <div className="flex items-center justify-between gap-4 p-5 sm:p-6">
+                <div className="flex min-w-0 items-start gap-4">
                   <input
                     type="checkbox"
                     checked={task?.completed}
                     onChange={() => handleToggle(task._id)}
-                    className="checkbox checkbox-accent"
+                    aria-label={`Mark ${task?.title} as completed`}
+                    className="checkbox checkbox-success mt-1 shrink-0 transition-transform duration-200 hover:scale-110"
                   />
 
-                  <div>
+                  <div className="min-w-0">
                     <p
-                      className={`text-xl font-semibold text-gray-800 ${task?.completed ? "line-through text-gray-200" : ""} `}
+                      className={`break-words text-base font-bold transition-all duration-300 sm:text-lg ${
+                        task?.completed
+                          ? "text-base-content/40 line-through"
+                          : "text-base-content"
+                      }`}
                     >
                       {task?.title}
                     </p>
-
-                    <div className="mt-2 flex flex-wrap items-center gap-3 text-sm">
-                      <div className="flex items-center gap-2 border border-gray-300 rounded-full px-2 py-0.5 bg-gray-100">
-                        <div
-                          className="h-2 w-2 rounded-full"
+                    <div className="mt-3 flex flex-wrap items-center gap-2">
+                      <span className="inline-flex items-center gap-2 rounded-full border border-base-300 bg-base-200/60 px-3 py-1 text-xs font-medium text-base-content/80">
+                        <span
+                          className="h-2.5 w-2.5 rounded-full ring-2 ring-base-100"
                           style={{
-                            backgroundColor: task?.subject?.color,
+                            backgroundColor: task?.subject?.color || "#94a3b8",
                           }}
-                        ></div>
+                        />
+                        {task?.subject?.name || "No subject"}
+                      </span>
 
-                        <p className="text-gray-600">{task?.subject?.name}</p>
-                      </div>
-                      <p
-                        className={`font-medium ${
-                          task.priority === "high"
-                            ? "text-red-500"
-                            : task.priority === "medium"
-                              ? "text-yellow-500"
-                              : "text-gray-400"
-                        } border border-gray-300 rounded-full px-2 py-0.5 bg-gray-100`}
+                      <span
+                        className={`rounded-full border px-3 py-1 text-xs font-semibold capitalize ${
+                          task?.priority === "high"
+                            ? "border-red-200 bg-red-50 text-red-600"
+                            : task?.priority === "medium"
+                              ? "border-amber-200 bg-amber-50 text-amber-600"
+                              : "border-sky-200 bg-sky-50 text-sky-600"
+                        }`}
                       >
-                        {task.priority}
-                      </p>
-                      <p className="flex items-center gap-1 text-gray-500">
-                        <IoIosTimer size={17} />
-                        {task?.minutes} min
-                      </p>
+                        {task?.priority || "low"} priority
+                      </span>
+
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-base-200/70 px-3 py-1 text-xs font-medium text-base-content/70">
+                        <IoIosTimer size={16} />
+                        {task?.minutes ?? 0} min
+                      </span>
+                    </div>
+
+                    <div className="mt-3">
+                      <span
+                        className={`inline-flex items-center gap-1.5 text-xs font-medium ${
+                          task?.completed
+                            ? "text-emerald-600"
+                            : "text-base-content/50"
+                        }`}
+                      >
+                        <span
+                          className={`h-1.5 w-1.5 rounded-full ${
+                            task?.completed ? "bg-emerald-500" : "bg-amber-400"
+                          }`}
+                        />
+                        {task?.completed ? "Completed" : "In progress"}
+                      </span>
                     </div>
                   </div>
                 </div>
                 <button
                   type="button"
-                  className="rounded-full p-2 text-gray-500 transition hover:bg-red-50 hover:text-red-500"
+                  aria-label={`Delete ${task?.title}`}
+                  title="Delete task"
+                  className="shrink-0 rounded-xl border border-transparent p-2.5 text-base-content/40 transition-all duration-200 hover:border-red-200 hover:bg-red-50 hover:text-red-500 active:scale-90"
                   onClick={() => deleteTask(task?._id)}
                 >
                   <MdDeleteOutline size={22} />
@@ -300,8 +337,8 @@ const Tasks = () => {
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-          <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+        <div className="aura aura-holo fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+          <div className=" w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
             <div className="mb-5 flex items-center justify-between">
               <h2 className="text-xl font-bold text-gray-800">Add Tasks</h2>
 

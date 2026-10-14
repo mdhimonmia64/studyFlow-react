@@ -338,7 +338,6 @@ const Pricing = () => {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="px-5 pb-20 sm:px-8 md:pb-28">
         <div className="mx-auto max-w-6xl rounded-3xl bg-primary px-6 py-12 text-center text-primary-content sm:px-12 sm:py-16">
           <h2 className="text-3xl font-extrabold sm:text-4xl">

@@ -1,5 +1,3 @@
-import React from 'react';
-
 const SectionHeader = ({title,subTitle}) => {
     return (
         <div className="max-w-[700px] mx-auto space-y-2 text-center">

@@ -116,48 +116,106 @@ const Goal = () => {
           return (
             <div
               key={goal._id}
-              className="card card-dash bg-base-100 shadow-sm py-6 px-8"
+              data-aos="fade-up"
+              className="group relative m-3 overflow-hidden rounded-2xl border border-base-300 bg-base-100 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-xl sm:m-4"
             >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <p>{goal?.title}</p>
-                </div>
-                <div>
-                  <MdDeleteOutline
-                    className="cursor-pointer"
-                    size={22}
+              <div className="h-1 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400" />
+
+              <div className="p-5 sm:p-6">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex min-w-0 items-start gap-3">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 transition-transform duration-300 group-hover:scale-110">
+                      <VscChecklist size={24} />
+                    </div>
+
+                    <div className="min-w-0">
+                      <h3 className="break-words text-base font-bold text-base-content transition-colors duration-300 group-hover:text-emerald-600 sm:text-lg">
+                        {goal?.title}
+                      </h3>
+
+                      <div className="mt-2 flex items-center gap-2">
+                        <span
+                          className="h-2.5 w-2.5 shrink-0 rounded-full ring-2 ring-base-200"
+                          style={{
+                            backgroundColor: goal?.subject?.color || "#94a3b8",
+                          }}
+                        />
+
+                        <p className="text-sm text-base-content/60">
+                          {goal?.subject?.name || "No subject"}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    aria-label={`Delete goal ${goal?.title}`}
+                    title="Delete goal"
                     onClick={() => handleDelete(goal._id)}
+                    className="shrink-0 rounded-xl p-2 text-base-content/40 transition-all duration-200 hover:bg-red-50 hover:text-red-500 active:scale-90"
+                  >
+                    <MdDeleteOutline size={22} />
+                  </button>
+                </div>
+                <div className="mt-6 flex items-end justify-between gap-3">
+                  <div>
+                    <p className="text-xs font-medium uppercase tracking-wider text-base-content/50">
+                      Linked tasks
+                    </p>
+
+                    <p className="mt-1 text-lg font-bold text-base-content">
+                      {goal?.taskCount ?? 0}
+                      <span className="ml-1 text-sm font-normal text-base-content/50">
+                        tasks
+                      </span>
+                    </p>
+                  </div>
+
+                  <div className="text-right">
+                    <p className="text-xs font-medium text-base-content/50">
+                      Progress
+                    </p>
+
+                    <p className="mt-1 text-2xl font-extrabold text-emerald-600">
+                      {Math.round(goal?.completed ?? 0)}%
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-base-200">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-1000 ease-out"
+                    style={{
+                      width: `${Math.min(100, Math.max(0, Number(goal?.completed) || 0))}%`,
+                    }}
                   />
                 </div>
-              </div>
+                <div className="mt-3 flex items-center justify-between">
+                  <span className="text-xs text-base-content/50">
+                    Keep moving forward!
+                  </span>
 
-              <div className="flex items-center gap-3 ">
-                <div
-                  className="h-3 w-3 rounded-full "
-                  style={{ backgroundColor: goal?.subject?.color }}
-                ></div>
-                <p>{goal?.subject?.name}</p>
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                      Number(goal?.completed) >= 100
+                        ? "bg-emerald-100 text-emerald-700"
+                        : "bg-amber-50 text-amber-700"
+                    }`}
+                  >
+                    {Number(goal?.completed) >= 100
+                      ? "Goal completed"
+                      : "In progress"}
+                  </span>
+                </div>
               </div>
-
-              <div className="flex items-center justify-between pt-5">
-                <p className="flex gap-2">
-                  <VscChecklist size={22} />
-                  {goal?.taskCount} linked tasks
-                </p>
-                <p className="my-2 text-sm">{Math.round(goal?.completed)}%</p>
-              </div>
-              <progress
-                className="progress progress-accent"
-                value={goal?.completed}
-                max="100"
-              ></progress>
             </div>
           );
         })}
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+        <div className="aura aura-holo fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
           <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
             <div className="mb-5 flex items-center justify-between">
               <h2 className="text-xl font-bold text-gray-800">Add Subject</h2>
@@ -172,7 +230,10 @@ const Goal = () => {
 
             <form onSubmit={handleGoal} className="space-y-4">
               <div>
-                <label htmlFor="title" className="mb-1 block font-medium text-gray-700">
+                <label
+                  htmlFor="title"
+                  className="mb-1 block font-medium text-gray-700"
+                >
                   Title
                 </label>
 
@@ -187,12 +248,15 @@ const Goal = () => {
               </div>
 
               <div>
-                <label htmlFor="target" className="mb-1 block font-medium text-gray-700">
+                <label
+                  htmlFor="target"
+                  className="mb-1 block font-medium text-gray-700"
+                >
                   Target
                 </label>
 
                 <input
-                id="target"
+                  id="target"
                   type="number"
                   name="target"
                   placeholder="target"
@@ -201,12 +265,15 @@ const Goal = () => {
                 />
               </div>
               <div>
-                <label htmlFor="date" className="mb-1 block font-medium text-gray-700">
+                <label
+                  htmlFor="date"
+                  className="mb-1 block font-medium text-gray-700"
+                >
                   Date
                 </label>
 
                 <input
-                id="date"
+                  id="date"
                   type="date"
                   name="date"
                   className="h-12 w-full cursor-pointer rounded-lg border p-1"
@@ -214,7 +281,10 @@ const Goal = () => {
                 />
               </div>
               <div>
-                <label htmlFor="subject" className="mb-1 block font-medium text-gray-700">
+                <label
+                  htmlFor="subject"
+                  className="mb-1 block font-medium text-gray-700"
+                >
                   Subject
                 </label>
                 <select

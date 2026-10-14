@@ -7,6 +7,7 @@ import NextStudySession from "../../components/NextStudySession";
 import Pricing from "../../components/Pricing";
 import Review from "../../components/Review";
 import Stats from "../../components/Stats";
+import StudyHero from "../../components/StudyHero";
 import Studying from "../../components/Studying";
 
 function Homepage() {
@@ -15,6 +16,7 @@ function Homepage() {
       <Banner />
       <Stats />
       <Studying />
+      <StudyHero />
       <Featured />
       <HowItWorks />
       <AIDayPlanning />

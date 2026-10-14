@@ -38,7 +38,7 @@ const Pricing = () => {
     },
   ];
   return (
-    <section className="container mx-auto py-12 space-y-8">
+    <section className="container mx-auto py-12 space-y-8 ">
       <SectionHeader
         title={"Simple Pricing"}
         subTitle={"Start free. Upgrade if you outgrow it."}
